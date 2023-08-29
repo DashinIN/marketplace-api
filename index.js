@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 //прикол 
 // otvet na prikol
 
-import pg from 'pg';
+const pg = require('pg');
 
 const { Pool } = pg;
 
