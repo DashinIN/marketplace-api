@@ -9,18 +9,9 @@ const router = require('./routes/index');
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const path = require("path")
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.DB_PORT || 5000;
 //прикол 
 // otvet na prikol
-
-const pg = require('pg');
-
-const { Pool } = pg;
-
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL + "?sslmode=require",
-})
-
 const app = express();
 
 app.use(cors());
@@ -41,8 +32,8 @@ app.get("/", (req, res) => {
 
 const start = async () => {
     try {
-       await pool.authenticate();
-       await pool.sync();
+       await sequelize.authenticate();
+       await sequelize.sync();
        app.listen(PORT, () => console.log(`server start on port ${PORT}`));
     } catch (e){
         console.log(e);
