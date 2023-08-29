@@ -12,6 +12,15 @@ const path = require("path")
 const PORT = process.env.PORT || 5000;
 //прикол 
 // otvet na prikol
+
+import pg from 'pg';
+
+const { Pool } = pg;
+
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL + "?sslmode=require",
+})
+
 const app = express();
 
 app.use(cors());
@@ -32,8 +41,8 @@ app.get("/", (req, res) => {
 
 const start = async () => {
     try {
-       await sequelize.authenticate();
-       await sequelize.sync();
+       await pool.authenticate();
+       await pool.sync();
        app.listen(PORT, () => console.log(`server start on port ${PORT}`));
     } catch (e){
         console.log(e);
